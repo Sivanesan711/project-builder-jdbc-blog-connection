@@ -9,14 +9,18 @@ import java.util.Properties;
 
 public class ConnectionManager
 {
-	public Connection getconnection() throws ClassNotFoundException, SQLException
+	public Connection getconnection() throws ClassNotFoundException, SQLException, IOException
 	{
 		
-		Class.forName("oracle.jdbc.OracleDriver");
+		Properties prop = loadPropertiesFile();
 		
-		Connection con = null;
-		
-		con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:Oracle","SYSTEM","root");
+		final String driver = prop.getProperty("driver");
+		final String url = prop.getProperty("url");
+		final String user = prop.getProperty("username");
+		final String pass = prop.getProperty("password");
+		Class.forName(driver);
+		Connection con;
+		con=DriverManager.getConnection(url,user,pass);
 		
 		if(con!=null)
 		{
