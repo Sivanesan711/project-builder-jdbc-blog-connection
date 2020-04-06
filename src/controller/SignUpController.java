@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.IOException;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -28,7 +30,16 @@ public class SignUpController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Sign up Controller");
-		// Fill your code here
+		
+		ConnectionManager cm = new ConnectionManager();
+		
+		try {
+			cm.getconnection();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
 		rd.forward(request,response);
 	}
